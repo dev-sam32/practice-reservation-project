@@ -35,7 +35,8 @@
 ---
 ## 🔀 ERD
 (구현 중 수정 예정)
-![reservation_v01 drawio](https://github.com/dev-sam32/practice-reservation-project/assets/90596545/43f2d83b-0ad7-4818-b66f-f3ba93ee3b7a)
+![reservation_v01 1drawio](https://github.com/dev-sam32/practice-reservation-project/assets/90596545/9628b27d-406f-4dd7-8a60-772645165ca5)
+
 
 
 ---
