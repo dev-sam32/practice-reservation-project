@@ -11,8 +11,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "MEMBER")
-public class MemberEntity {
+@Entity(name = "PARTNER")
+public class PartnerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;            // PK
