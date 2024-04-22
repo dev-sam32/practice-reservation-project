@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.zerobase.reservation.entity.MemberEntity;
 import com.zerobase.reservation.entity.PartnerEntity;
 
-public record SignUp(String name,String password, @JsonProperty("partnerYn") Boolean partnerYn) {
+public record SignUp(String name, String password, @JsonProperty("partnerYn") Boolean partnerYn) {
 
     public SignUp(String name, String password, Boolean partnerYn) {
         this.name = name;
