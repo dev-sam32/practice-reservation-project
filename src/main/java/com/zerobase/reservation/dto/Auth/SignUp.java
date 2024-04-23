@@ -1,8 +1,8 @@
 package com.zerobase.reservation.dto.Auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.zerobase.reservation.entity.MemberEntity;
-import com.zerobase.reservation.entity.PartnerEntity;
+import com.zerobase.reservation.entity.Member;
+import com.zerobase.reservation.entity.Role;
 
 public record SignUp(String name, String password, @JsonProperty("partnerYn") Boolean partnerYn) {
 
@@ -12,17 +12,11 @@ public record SignUp(String name, String password, @JsonProperty("partnerYn") Bo
         this.partnerYn = partnerYn;
     }
 
-    public Object toEntity() {
-        if (this.partnerYn) {
-            return PartnerEntity.builder()
-                    .name(this.name)
-                    .password(this.password)
-                    .build();
-        } else {
-            return MemberEntity.builder()
-                    .name(this.name)
-                    .password(this.password)
-                    .build();
-        }
+    public Member toEntity() {
+        return Member.builder()
+                .name(this.name)
+                .password(this.password)
+                .role(partnerYn ? Role.PARTNER : Role.USER) // partnerYn 옵션을 통해서 PARTNER, USER Role 부여
+                .build();
     }
 }
