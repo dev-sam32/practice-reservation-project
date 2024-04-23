@@ -23,7 +23,7 @@ public class Member implements UserDetails {
     @Column(length = 20)
     private String name;        // ID
 
-    @Column(length = 50)
+    @Column(length = 60)
     private String password;    // Password
 
     @Enumerated(EnumType.STRING)
