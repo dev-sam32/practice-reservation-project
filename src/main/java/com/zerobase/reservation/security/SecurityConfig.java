@@ -9,19 +9,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Slf4j
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    private final JwtAuthFilter jwtAuthFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -31,11 +27,14 @@ public class SecurityConfig {
                         headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
                 )
                 .authorizeHttpRequests(
-                        req -> req.anyRequest().permitAll()
+                        req -> req
+                                .requestMatchers("/auth/**").permitAll()
+                                .anyRequest().authenticated()
                 )
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
+                )
+                .addFilterBefore(this.jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
