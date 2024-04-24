@@ -17,3 +17,8 @@ spring:
     url: jdbc:h2:mem:reservation;DB_CLOSE_DELAY=-1
     username: sa
     password:
+
+  security:
+    jwt:
+      secretkey: ZGF5b25lLXNwcmluZy1ib290LWRpdmlkZW5kLXByb2plY3Qtand0LXNlY3JldC1rZXkK
+      expiredtime: 86400000 # 24h : 24*60*60*1000
