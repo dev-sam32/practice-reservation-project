@@ -22,20 +22,22 @@ public class MemberService implements UserDetailsService {
     public Member register(SignUp signUp) {
         boolean exists = this.memberRepository.existsByName(signUp.name());
 
-        if (!exists) {
-                Member member = signUp.toEntity();
-                member.setPassword(this.passwordEncoder.encode(signUp.password()));
-                return this.memberRepository.save(member);
-        } else {
+        if (exists) {
             // TODO : Exception
             throw new RuntimeException("이미 존재하는 ID 입니다. -> " + signUp.name());
+        } else {
+            Member member = signUp.toEntity();
+            member.setPassword(this.passwordEncoder.encode(signUp.password()));
+
+            return this.memberRepository.save(member);
         }
     }
 
     public Member authentication(SignIn signIn) {
-        Member member = (Member) loadUserByUsername(signIn.name());
+        Member member = this.memberRepository.findByName(signIn.name())
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 ID"));
 
-        if (!this.passwordEncoder.matches(member.getPassword(), signIn.password())) {
+        if (!this.passwordEncoder.matches(signIn.password(), member.getPassword())) {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }
 
